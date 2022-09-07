@@ -1,4 +1,5 @@
 import sys
+from socket import *
 
 class Client:
     def __init__(self, seqn, filename, size):
@@ -18,4 +19,13 @@ class Client:
             self.data += new_data
 
 
-socket = sys.argv[1]
+port = int(sys.argv[1])
+localhost = "localhost"
+s = socket(AF_INET, SOCK_DGRAM)
+s.settimeout(15)
+s.bind((localhost, port))
+
+while True:
+    data, address_client = s.recvfrom(1024)
+    print(f"{data} {address_client}")
+
